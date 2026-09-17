@@ -4,11 +4,11 @@
 
 A visão geral facilita a leitura dos relacionamentos. O diagrama completo contém os atributos, construtores, métodos, visibilidades, tipos e multiplicidades de todos os 19 tipos Java modelados.
 
-![Visão geral das classes](./classes-visao-geral.svg)
+![Visão geral das classes](./classes-visao-geral.png)
 
-- [Diagrama completo com atributos e métodos (SVG, ampliar para ler)](./classes.svg)
-- [Detalhamento do domínio](./classes-dominio.svg)
-- [Detalhamento dos serviços e da integração](./classes-servico.svg)
+- [Diagrama completo com atributos e métodos (PNG, ampliar para ler)](./classes.png)
+- [Detalhamento do domínio](./classes-dominio.png)
+- [Detalhamento dos serviços e da integração](./classes-servico.png)
 - [Fonte do diagrama completo](./classes.puml)
 - [Definições compartilhadas das classes](./classes-modelo.puml)
 
@@ -51,7 +51,7 @@ O encerramento percorre todos os currículos do semestre, avalia cada oferta e c
 Com Java e o JAR do PlantUML 1.2025.4 (usado nesta entrega), a partir da raiz:
 
 ```sh
-java -Djava.awt.headless=true -jar /caminho/plantuml.jar -charset UTF-8 -tsvg Artefato/casos-de-uso.puml Artefato/classes.puml Artefato/classes-visao-geral.puml Artefato/classes-dominio.puml Artefato/classes-servico.puml
+PLANTUML_LIMIT_SIZE=16384 java -Djava.awt.headless=true -jar /caminho/plantuml.jar -charset UTF-8 -tpng Artefato/casos-de-uso.puml Artefato/classes.puml Artefato/classes-visao-geral.puml Artefato/classes-dominio.puml Artefato/classes-servico.puml
 ```
 
-As fontes usam o mecanismo Smetana, dispensando instalação de Graphviz. `classes-modelo.puml` é incluído pelos diagramas e não deve ser renderizado isoladamente. As imagens SVG estão versionadas para leitura direta no GitHub.
+O limite de tamanho acima evita recortar os diagramas maiores na exportação para PNG. As fontes usam o mecanismo Smetana, dispensando instalação de Graphviz. `classes-modelo.puml` é incluído pelos diagramas e não deve ser renderizado isoladamente. As imagens PNG estão versionadas para leitura direta no GitHub.

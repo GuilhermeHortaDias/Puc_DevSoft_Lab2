@@ -2,7 +2,7 @@
 
 ## Sprint 02 — versão revisada
 
-![Casos de uso revisados](./casos-de-uso.svg)
+![Casos de uso revisados](./casos-de-uso.png)
 
 - [Fonte editável PlantUML](./casos-de-uso.puml)
 - [Correções, regras e decisões de modelagem](./REVISAO-S02.md)

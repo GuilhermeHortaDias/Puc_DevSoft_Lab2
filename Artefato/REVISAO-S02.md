@@ -40,4 +40,4 @@ As setas tracejadas `include` apontam para o comportamento incluído. O sistema 
 
 ## Histórico
 
-A versão original continua no histórico Git da Sprint 01. O PNG original também permanece em `diagrama-casos-de-uso.png` para comparação. A fonte editável revisada é `casos-de-uso.puml`, com visualização em `casos-de-uso.svg`.
+A versão original continua no histórico Git da Sprint 01. O PNG original também permanece em `diagrama-casos-de-uso.png` para comparação. A fonte editável revisada é `casos-de-uso.puml`, com visualização em `casos-de-uso.png`.

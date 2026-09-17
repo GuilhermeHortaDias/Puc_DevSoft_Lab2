@@ -9,7 +9,7 @@ skinparam defaultFontName SansSerif
 skinparam defaultFontSize 13
 skinparam packageStyle rectangle
 skinparam linetype polyline
-!include classes-modelo.puml!dominio
+!includesub classes-modelo.puml!dominio
 title Sistema de Matrículas — Detalhamento de dominio
 Usuario <|-- Aluno
 Usuario <|-- Professor
