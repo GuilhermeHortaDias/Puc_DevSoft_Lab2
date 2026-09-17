@@ -1,0 +1,32 @@
+@startuml
+!pragma layout smetana
+set namespaceSeparator none
+skinparam nodesep 70
+skinparam ranksep 90
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 13
+skinparam packageStyle rectangle
+skinparam linetype polyline
+!include classes-modelo.puml!dominio
+title Sistema de Matrículas — Detalhamento de dominio
+Usuario <|-- Aluno
+Usuario <|-- Professor
+Usuario <|-- FuncionarioSecretaria
+Aluno "0..*" --> "1" Curso : curso
+Curso "0..*" --> "0..*" Disciplina : disciplinas
+Semestre "1" *--> "1" PeriodoMatricula : periodoMatricula
+Curriculo "0..*" --> "1" Curso : curso
+Curriculo "0..*" --> "1" Semestre : semestre
+Curriculo "1" *-- "0..*" OfertaDisciplina : ofertas / curriculo
+OfertaDisciplina "0..*" --> "1" Disciplina : disciplina
+OfertaDisciplina "0..*" --> "1" Professor : professor
+MatriculaSemestral "0..*" --> "1" Aluno : aluno
+MatriculaSemestral "0..*" --> "1" Semestre : semestre
+MatriculaSemestral "1" *-- "0..*" Inscricao : inscricoes / matricula
+OfertaDisciplina "1" -- "0..*" Inscricao : inscricoes / oferta
+Inscricao ..> TipoOpcao
+Inscricao ..> SituacaoInscricao
+OfertaDisciplina ..> SituacaoOferta
+@enduml

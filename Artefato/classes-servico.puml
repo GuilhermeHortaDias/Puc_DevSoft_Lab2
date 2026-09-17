@@ -1,0 +1,18 @@
+@startuml
+!pragma layout smetana
+set namespaceSeparator none
+skinparam nodesep 70
+skinparam ranksep 90
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 13
+skinparam packageStyle rectangle
+skinparam linetype polyline
+!include classes-modelo.puml!servico
+!include classes-modelo.puml!integracao
+title Sistema de Matrículas — Detalhamento de servico
+MatriculaServico --> "1" GatewayCobranca : cobranca
+AutenticacaoServico -[hidden]down-> SecretariaServico
+SecretariaServico -[hidden]down-> MatriculaServico
+@enduml

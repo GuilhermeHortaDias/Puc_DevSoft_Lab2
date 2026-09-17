@@ -1,0 +1,162 @@
+' Tipos e assinaturas da Sprint 02. Incluído pelos diagramas de classes.
+!startsub dominio
+package "br.edu.pucminas.matriculas.dominio" {
+abstract class Usuario {
+  -id: long
+  -nome: String
+  -login: String
+  -senhaHash: String
+  #Usuario(id: long, nome: String, login: String, senhaHash: String)
+  +validarSenha(senha: String): boolean
+  +atualizarDados(nome: String, login: String): void
+  +alterarSenha(novaSenha: String): void
+}
+class Aluno {
+  -registroAcademico: String
+  -curso: Curso
+  +Aluno(id: long, nome: String, login: String, senhaHash: String, registroAcademico: String, curso: Curso)
+}
+class Professor {
+  -registroFuncional: String
+  +Professor(id: long, nome: String, login: String, senhaHash: String, registroFuncional: String)
+}
+class FuncionarioSecretaria {
+  -registroFuncional: String
+  +FuncionarioSecretaria(id: long, nome: String, login: String, senhaHash: String, registroFuncional: String)
+}
+class Curso {
+  -id: long
+  -nome: String
+  -totalCreditos: int
+  -disciplinas: List<Disciplina>
+  +Curso(id: long, nome: String, totalCreditos: int)
+  +atualizarDados(nome: String, totalCreditos: int): void
+  +adicionarDisciplina(disciplina: Disciplina): void
+}
+class Disciplina {
+  -id: long
+  -nome: String
+  -creditos: int
+  +Disciplina(id: long, nome: String, creditos: int)
+  +atualizarDados(nome: String, creditos: int): void
+}
+class Semestre {
+  -ano: int
+  -numero: int
+  -periodoMatricula: PeriodoMatricula
+  +Semestre(ano: int, numero: int, periodoMatricula: PeriodoMatricula)
+  +definirPeriodo(inicio: LocalDateTime, fim: LocalDateTime): void
+}
+class PeriodoMatricula {
+  -inicio: LocalDateTime
+  -fim: LocalDateTime
+  -encerrado: boolean
+  +PeriodoMatricula(inicio: LocalDateTime, fim: LocalDateTime)
+  +estaAberto(agora: LocalDateTime): boolean
+  +encerrar(agora: LocalDateTime): void
+}
+class Curriculo {
+  -id: long
+  -curso: Curso
+  -semestre: Semestre
+  -ofertas: List<OfertaDisciplina>
+  +Curriculo(id: long, curso: Curso, semestre: Semestre)
+  +ofertarDisciplina(idOferta: long, disciplina: Disciplina, professor: Professor): OfertaDisciplina
+}
+class OfertaDisciplina {
+  {static} +{readOnly} MINIMO_ALUNOS: int = 3
+  {static} +{readOnly} MAXIMO_ALUNOS: int = 60
+  -id: long
+  -disciplina: Disciplina
+  -professor: Professor
+  -curriculo: Curriculo
+  -situacao: SituacaoOferta
+  -inscricoes: List<Inscricao>
+  +OfertaDisciplina(id: long, disciplina: Disciplina, professor: Professor, curriculo: Curriculo)
+  +contarInscritos(): int
+  +possuiVaga(): boolean
+  +adicionarInscricao(inscricao: Inscricao): void
+  +avaliarAtivacao(): void
+  +listarAlunos(): List<Aluno>
+}
+class MatriculaSemestral {
+  {static} +{readOnly} MAXIMO_PRIMEIRAS_OPCOES: int = 4
+  {static} +{readOnly} MAXIMO_ALTERNATIVAS: int = 2
+  -id: long
+  -aluno: Aluno
+  -semestre: Semestre
+  -inscricoes: List<Inscricao>
+  +MatriculaSemestral(id: long, aluno: Aluno, semestre: Semestre)
+  +contarInscricoes(tipo: TipoOpcao): int
+  +validarLimites(primeirasOpcoes: List<OfertaDisciplina>, alternativas: List<OfertaDisciplina>): void
+  +adicionarInscricao(idInscricao: long, oferta: OfertaDisciplina, tipo: TipoOpcao): Inscricao
+}
+class Inscricao {
+  -id: long
+  -matricula: MatriculaSemestral
+  -oferta: OfertaDisciplina
+  -tipo: TipoOpcao
+  -situacao: SituacaoInscricao
+  +Inscricao(id: long, matricula: MatriculaSemestral, oferta: OfertaDisciplina, tipo: TipoOpcao)
+  +cancelar(): void
+}
+enum TipoOpcao {
+  PRIMEIRA_OPCAO
+  ALTERNATIVA
+}
+enum SituacaoOferta {
+  EM_MATRICULA
+  ATIVA
+  CANCELADA
+}
+enum SituacaoInscricao {
+  VIGENTE
+  CANCELADA
+}
+}
+!endsub
+!startsub servico
+package "br.edu.pucminas.matriculas.servico" {
+class AutenticacaoServico {
+  -usuarios: List<Usuario>
+  +AutenticacaoServico(usuarios: List<Usuario>)
+  +autenticar(login: String, senha: String): Usuario
+}
+class SecretariaServico {
+  -alunos: List<Aluno>
+  -professores: List<Professor>
+  -cursos: List<Curso>
+  -disciplinas: List<Disciplina>
+  -curriculos: List<Curriculo>
+  +SecretariaServico(alunos: List<Aluno>, professores: List<Professor>, cursos: List<Curso>, disciplinas: List<Disciplina>, curriculos: List<Curriculo>)
+  +cadastrarAluno(responsavel: FuncionarioSecretaria, aluno: Aluno): void
+  +atualizarAluno(responsavel: FuncionarioSecretaria, aluno: Aluno, nome: String, login: String): void
+  +cadastrarProfessor(responsavel: FuncionarioSecretaria, professor: Professor): void
+  +atualizarProfessor(responsavel: FuncionarioSecretaria, professor: Professor, nome: String, login: String): void
+  +cadastrarCurso(responsavel: FuncionarioSecretaria, curso: Curso): void
+  +atualizarCurso(responsavel: FuncionarioSecretaria, curso: Curso, nome: String, totalCreditos: int): void
+  +cadastrarDisciplina(responsavel: FuncionarioSecretaria, disciplina: Disciplina): void
+  +atualizarDisciplina(responsavel: FuncionarioSecretaria, disciplina: Disciplina, nome: String, creditos: int): void
+  +prepararCurriculo(responsavel: FuncionarioSecretaria, id: long, curso: Curso, semestre: Semestre): Curriculo
+  +ofertarDisciplina(responsavel: FuncionarioSecretaria, curriculo: Curriculo, idOferta: long, disciplina: Disciplina, professor: Professor): OfertaDisciplina
+  +definirPeriodo(responsavel: FuncionarioSecretaria, semestre: Semestre, inicio: LocalDateTime, fim: LocalDateTime): void
+  +encerrarMatriculas(responsavel: FuncionarioSecretaria, semestre: Semestre, agora: LocalDateTime): void
+}
+class MatriculaServico {
+  -matriculas: List<MatriculaSemestral>
+  -cobranca: GatewayCobranca
+  +MatriculaServico(matriculas: List<MatriculaSemestral>, cobranca: GatewayCobranca)
+  +realizarMatricula(aluno: Aluno, semestre: Semestre, primeirasOpcoes: List<OfertaDisciplina>, alternativas: List<OfertaDisciplina>, agora: LocalDateTime): MatriculaSemestral
+  +cancelarInscricao(aluno: Aluno, inscricao: Inscricao, agora: LocalDateTime): void
+  +consultarVagas(aluno: Aluno, oferta: OfertaDisciplina, agora: LocalDateTime): int
+  +consultarAlunos(professor: Professor, oferta: OfertaDisciplina): List<Aluno>
+}
+}
+!endsub
+!startsub integracao
+package "br.edu.pucminas.matriculas.integracao" {
+interface GatewayCobranca {
+  +notificarMatricula(matricula: MatriculaSemestral): void
+}
+}
+!endsub
