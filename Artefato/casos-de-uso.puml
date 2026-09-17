@@ -1,0 +1,69 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 14
+skinparam actorStyle stickman
+title Sistema de Matrículas — Casos de uso revisados (Lab01S02)
+actor "Usuário" as Usuario
+actor "Aluno" as Aluno
+actor "Professor" as Professor
+actor "Funcionário da secretaria" as Secretaria
+actor "Sistema de cobranças" as Cobrancas
+Usuario <|-- Aluno
+Usuario <|-- Professor
+Usuario <|-- Secretaria
+rectangle "Sistema de Matrículas" {
+  usecase "UC01 — Autenticar usuário" as UC01
+  usecase "UC02 — Cadastrar e atualizar alunos" as UC02
+  usecase "UC03 — Cadastrar e atualizar professores" as UC03
+  usecase "UC04 — Cadastrar e atualizar disciplinas" as UC04
+  usecase "UC05 — Cadastrar e atualizar cursos" as UC05
+  usecase "UC06 — Preparar currículo do semestre" as UC06
+  usecase "UC07 — Definir período de matrículas" as UC07
+  usecase "UC08 — Encerrar período de matrículas" as UC08
+  usecase "UC09 — Realizar matrícula" as UC09
+  usecase "UC10 — Cancelar inscrição em disciplina" as UC10
+  usecase "UC11 — Consultar vagas" as UC11
+  usecase "UC12 — Consultar alunos matriculados" as UC12
+  usecase "UC13 — Notificar sistema de cobranças" as UC13
+  usecase "Verificar período de matrículas" as Periodo
+  usecase "Verificar limites de escolhas" as Limites
+  usecase "Verificar disponibilidade de vagas" as Vagas
+  usecase "Avaliar ofertas do semestre" as Avaliar
+}
+Usuario -- UC01
+Secretaria -- UC02
+Secretaria -- UC03
+Secretaria -- UC04
+Secretaria -- UC05
+Secretaria -- UC06
+Secretaria -- UC07
+Secretaria -- UC08
+Aluno -- UC09
+Aluno -- UC10
+Aluno -- UC11
+Professor -- UC12
+Cobrancas -- UC13
+UC09 ..> Periodo : <<include>>
+UC09 ..> Limites : <<include>>
+UC09 ..> Vagas : <<include>>
+UC09 ..> UC13 : <<include>>
+UC10 ..> Periodo : <<include>>
+UC08 ..> Avaliar : <<include>>
+note bottom of Avaliar
+  No encerramento: >= 3 inscritos confirma a oferta;
+  < 3 cancela a oferta e suas inscrições.
+  São resultados da avaliação, não casos de uso separados.
+end note
+note bottom of Vagas
+  Limite de 60 inscrições vigentes por oferta.
+  Lotação impede novas inscrições; não impede cancelamentos.
+end note
+note top of UC01
+  Usuário autenticado e perfil autorizado são precondições
+  dos demais casos de uso dos atores humanos.
+end note
+@enduml

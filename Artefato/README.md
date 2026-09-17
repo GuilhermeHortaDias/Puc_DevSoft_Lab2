@@ -40,7 +40,7 @@ Como funcionário da secretaria, quero processar o encerramento do período de m
 
 ### Realizar matrícula
 
-Como aluno, quero me matricular em até 4 disciplinas obrigatórias e até 2 disciplinas optativas, para organizar meus estudos no semestre.
+Como aluno, quero me matricular em até 4 disciplinas de primeira opção (obrigatórias) e até 2 alternativas (optativas), para organizar meus estudos no semestre.
 
 ### Cancelar matrícula
 
@@ -71,3 +71,7 @@ Como universidade, quero que cada disciplina seja avaliada ao final do período 
 ### Receber dados da matrícula
 
 Como sistema de cobranças, quero ser notificado após a matrícula do aluno, para realizar a cobrança das disciplinas do semestre.
+
+## Revisão na Sprint 02
+
+As categorias acima representam as escolhas do aluno no semestre. Os limites e o cancelamento se aplicam à oferta semestral, preservando o cadastro da disciplina. Consulte as [regras e decisões revisadas](./REVISAO-S02.md) e o [diagrama corrigido](./DIAGRAMA.md). As histórias da seção “Regras do sistema” são detalhadas como RN05 e RN06, sem representar um ator adicional.
